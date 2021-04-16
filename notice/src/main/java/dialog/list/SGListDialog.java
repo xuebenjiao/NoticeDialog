@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yto.common.notice.R;
+import com.announce.common.notice.R;
 
 import dialog.OnBindViewListener;
 import dialog.OnViewClickListener;

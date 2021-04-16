@@ -10,7 +10,7 @@ import android.view.View;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.yto.common.notice.R;
+import com.announce.common.notice.R;
 
 import java.io.Serializable;
 

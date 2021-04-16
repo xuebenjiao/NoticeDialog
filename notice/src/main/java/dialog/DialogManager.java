@@ -2,31 +2,29 @@ package dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
-import com.yto.common.notice.MyWebView;
-import com.yto.common.notice.R;
-import com.yto.common.notice.api.DataCallBack;
-import com.yto.common.notice.api.RetrofitUtil;
-import com.yto.common.notice.api.requestparameter.RequestParameter;
-import com.yto.common.notice.entity.PopAnnounceData;
+import com.announce.common.notice.MyWebView;
+import com.announce.common.notice.R;
+import com.announce.common.notice.api.DataCallBack;
+import com.announce.common.notice.api.RetrofitUtil;
+import com.announce.common.notice.api.requestparameter.RequestParameter;
+import com.announce.common.notice.entity.PopAnnounceData;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class DialogManager {
+    private PopAnnounceData popAnnounceData;
 
     private FragmentManager fragmentManager;
     private Context context;
@@ -48,12 +46,15 @@ public class DialogManager {
 
     }
 
+    public void setPopAnnounceData(PopAnnounceData popAnnounceData) {
+        this.popAnnounceData = popAnnounceData;
+        if(popAnnounceData != null){
+            showDialog(popAnnounceData);
+        }
+
+    }
+
     private void requestData() {
-//        RequestParameter parameter = new RequestParameter();
-//        parameter.setAppCode("bc7c151dbe8c45c8a3ce486d64d76bd7");
-//        parameter.setAppSecret("2690d6b105");
-//        parameter.setUserCode("01653893");
-//        parameter.setUserName("曾超");
         Call<ResponseBody> call = RetrofitUtil.getInstance().getApiService().getPopAnnounceList(parameter);
         RetrofitUtil.getInstance().requestMode(call, new DataCallBack() {
             @Override
@@ -63,66 +64,7 @@ public class DialogManager {
                 if (popAnnounceData == null || popAnnounceData.getAnnounce() == null) {
                     return;
                 }
-                new SGDialog.Builder(fragmentManager)
-                        .setLayoutRes(R.layout.dialog_announce)
-//                        .setScreenHeightAspect(context, 0.7f)
-                        .setScreenWidthAspect(context, 0.8f)
-                        .setCancelableOutside(false)
-                        .setOnKeyListener(new DialogInterface.OnKeyListener() {
-                            @Override
-                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-                                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                    if (popAnnounceData.getAnnounce().getCheckChoice().equals("1")) {//checkChoice查看选项1强制0不强制',
-//                                        Toast.makeText(context, "强制按返回键无效", Toast.LENGTH_LONG).show();
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            }
-                        })
-                        .setOnBindViewListener(new OnBindViewListener() {
-                            @Override
-                            public void bindView(BindViewHolder viewHolder) {
-                                LinearLayout view = viewHolder.getView(R.id.ll);
-//                               TextView textViewContent = view.findViewById(R.id.tv_a_content);
-                                TextView textViewTitle = view.findViewById(R.id.tv_title);
-                                ImageView iv_close = viewHolder.bindView.findViewById(R.id.iv_close);
-//                                textViewContent.setText(Html.fromHtml(htmlText));
-                                if (popAnnounceData != null && popAnnounceData.getAnnounce() != null) {
-                                    textViewTitle.setText(popAnnounceData.getAnnounce().getAnnounceName());
-//                                   htmlText = popAnnounceData.getAnnounce().getContent()==null?"":popAnnounceData.getAnnounce().getContent();
-//                                   textView.setText(Html.fromHtml(popAnnounceData.getAnnounce().getContent()==null?"":popAnnounceData.getAnnounce().getContent()));
-//                                   textViewContent.setText(Html.fromHtml(htmlText));
-                                    if (popAnnounceData.getAnnounce().getCheckChoice().equals("1")) {//checkChoice查看选项1强制0不强制',
-                                        iv_close.setVisibility(View.GONE);
-                                    } else {
-                                        iv_close.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            }
-                        })
-                        .addOnClickListener(R.id.iv_close, R.id.bt_check)
-                        .setOnViewClickListener(new OnViewClickListener() {
-                            @Override
-                            public void onViewClick(BindViewHolder viewHolder, View view, SGDialog tDialog) {
-                                if (view.getId() == R.id.bt_check) {
-                                    if (popAnnounceData != null) {
-                                        if (popAnnounceData.getAnnounce() != null && !TextUtils.isEmpty(popAnnounceData.getAnnounce().getAnnounceName())) {
-                                            MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), popAnnounceData.getAnnounce().getAnnounceName(),
-                                                    titleColor, titleBarColor, backImageColor);
-                                        } else {
-                                            MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "", titleColor, titleBarColor, backImageColor);
-                                        }
-
-                                    }
-
-                                }
-                                tDialog.dismiss();
-                            }
-                        })
-                        .create()
-                        .show();
+                showDialog(popAnnounceData);
             }
 
             @Override
@@ -130,6 +72,66 @@ public class DialogManager {
                 Log.e("error", msg);
             }
         });
+    }
+
+    private void showDialog(final PopAnnounceData popAnnounceData) {
+        new SGDialog.Builder(fragmentManager)
+                .setLayoutRes(R.layout.dialog_announce)
+//                        .setScreenHeightAspect(context, 0.7f)
+                .setScreenWidthAspect(context, 0.8f)
+                .setCancelableOutside(false)
+                .setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            if (popAnnounceData.getAnnounce().getCheckChoice().equals("1")) {//checkChoice查看选项1强制0不强制',
+//                                        Toast.makeText(context, "强制按返回键无效", Toast.LENGTH_LONG).show();
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                })
+                .setOnBindViewListener(new OnBindViewListener() {
+                    @Override
+                    public void bindView(BindViewHolder viewHolder) {
+                        LinearLayout view = viewHolder.getView(R.id.ll);
+//                               TextView textViewContent = view.findViewById(R.id.tv_a_content);
+                        TextView textViewTitle = view.findViewById(R.id.tv_title);
+                        ImageView iv_close = viewHolder.bindView.findViewById(R.id.iv_close);
+//                                textViewContent.setText(Html.fromHtml(htmlText));
+                        if (popAnnounceData != null && popAnnounceData.getAnnounce() != null) {
+                            textViewTitle.setText(popAnnounceData.getAnnounce().getAnnounceName());
+                            if (popAnnounceData.getAnnounce().getCheckChoice().equals("1")) {//checkChoice查看选项1强制0不强制',
+                                iv_close.setVisibility(View.GONE);
+                            } else {
+                                iv_close.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                })
+                .addOnClickListener(R.id.iv_close, R.id.bt_check)
+                .setOnViewClickListener(new OnViewClickListener() {
+                    @Override
+                    public void onViewClick(BindViewHolder viewHolder, View view, SGDialog tDialog) {
+                        if (view.getId() == R.id.bt_check) {
+                            if (popAnnounceData != null) {
+                                if (popAnnounceData.getAnnounce() != null && !TextUtils.isEmpty(popAnnounceData.getAnnounce().getAnnounceName())) {
+                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), popAnnounceData.getAnnounce().getAnnounceName(),
+                                            titleColor, titleBarColor, backImageColor);
+                                } else {
+                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "", titleColor, titleBarColor, backImageColor);
+                                }
+
+                            }
+
+                        }
+                        tDialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     public static class Builder {
@@ -159,9 +161,15 @@ public class DialogManager {
             return this;
         }
 
+        public Builder setPopAnnounceData(PopAnnounceData entity){
+            dialogManager.setPopAnnounceData(entity);
+            return this;
+        }
+
         public DialogManager create() {
-            dialogManager.requestData();
+//            dialogManager.requestData();
             return dialogManager;
         }
+
     }
 }

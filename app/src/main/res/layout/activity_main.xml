@@ -18,7 +18,7 @@
         android:onClick="homeBannerDialog"
         android:text="首页广告" />
 
-    <com.yto.common.notice.marqueeview.MarqueeView
+    <com.announce.common.notice.marqueeview.MarqueeView
         android:id="@+id/marqueeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
     <!--android:background="@drawable/bg_large_oval_radius"-->
-    <com.yto.common.notice.marqueeview.SimpleMarqueeView
+    <com.announce.common.notice.marqueeview.SimpleMarqueeView
         android:id="@+id/marqueeView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
