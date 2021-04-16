@@ -1,4 +1,4 @@
-# ytoCommonAlert
+# NoticeDialog
 公共弹框组件
 引用方式如下：
 第一步:
@@ -17,7 +17,7 @@ allprojects {
 
 Add the dependency in your mainModel build.gradle
 dependencies {
-	        implementation 'com.github.shegang:ytoCommonAlert:1.0'
+	        implementation 'com.github.xuebenjiao:NoticeDialog:v1.0.0'
 	}
   
 第三部集成引用:
