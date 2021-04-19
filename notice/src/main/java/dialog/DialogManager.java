@@ -116,7 +116,7 @@ public class DialogManager {
                     @Override
                     public void onViewClick(BindViewHolder viewHolder, View view, SGDialog tDialog) {
                         if (view.getId() == R.id.bt_check) {
-                            if (popAnnounceData != null) {
+                            if (popAnnounceData != null && !TextUtils.isEmpty(popAnnounceData.getDetailUrl())) {
                                 if (popAnnounceData.getAnnounce() != null && !TextUtils.isEmpty(popAnnounceData.getAnnounce().getAnnounceName())) {
                                     MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), popAnnounceData.getAnnounce().getAnnounceName(),
                                             titleColor, titleBarColor, backImageColor);
