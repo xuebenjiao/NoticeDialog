@@ -1,4 +1,4 @@
-package dialog;
+package com.announce.common.notice.dialog;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;

@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.announce.common.notice">
-
+    <application>
+        <activity android:name="com.announce.common.notice.MyWebView"/>
+    </application>
 </manifest>

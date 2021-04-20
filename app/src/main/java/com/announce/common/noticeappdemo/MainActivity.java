@@ -19,7 +19,7 @@ import com.announce.common.notice.marqueeview.util.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import dialog.DialogManager;
+import com.announce.common.notice.dialog.DialogManager;
 
 public class MainActivity extends AppCompatActivity {
     private MarqueeView<RelativeLayout, ComplexItemEntity> marqueeView;

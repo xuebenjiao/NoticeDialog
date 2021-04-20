@@ -1,4 +1,4 @@
-package dialog;
+package com.announce.common.notice.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;

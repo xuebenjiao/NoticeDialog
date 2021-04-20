@@ -1,4 +1,4 @@
-package dialog.list;
+package com.announce.common.notice.dialog.list;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.announce.common.notice.R;
 
-import dialog.OnBindViewListener;
-import dialog.OnViewClickListener;
-import dialog.SGBaseAdapter;
-import dialog.TController;
-import dialog.SGDialog;
+import com.announce.common.notice.dialog.OnBindViewListener;
+import com.announce.common.notice.dialog.OnViewClickListener;
+import com.announce.common.notice.dialog.SGBaseAdapter;
+import com.announce.common.notice.dialog.TController;
+import com.announce.common.notice.dialog.SGDialog;
 
 
 /**
