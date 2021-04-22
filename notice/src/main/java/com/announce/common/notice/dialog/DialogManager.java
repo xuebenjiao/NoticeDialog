@@ -118,10 +118,10 @@ public class DialogManager {
                         if (view.getId() == R.id.bt_check) {
                             if (popAnnounceData != null && !TextUtils.isEmpty(popAnnounceData.getDetailUrl())) {
                                 if (popAnnounceData.getAnnounce() != null && !TextUtils.isEmpty(popAnnounceData.getAnnounce().getAnnounceName())) {
-                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), popAnnounceData.getAnnounce().getAnnounceName(),
+                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "消息中心",//popAnnounceData.getAnnounce().getAnnounceName()
                                             titleColor, titleBarColor, backImageColor);
                                 } else {
-                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "", titleColor, titleBarColor, backImageColor);
+                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "消息中心", titleColor, titleBarColor, backImageColor);
                                 }
 
                             }
