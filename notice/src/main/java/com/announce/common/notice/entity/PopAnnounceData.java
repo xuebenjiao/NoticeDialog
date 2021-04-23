@@ -49,8 +49,13 @@ public class PopAnnounceData implements Serializable {
     private String announceToken;
     private AnnounceData announce;
     private String detailUrl;
-    //用户token
-    private String  userToken;
+    //校验登录
+    private boolean validateLogin;
+    //用户登录成功的token
+    private String  loginToken;
+
+    //没有登录时的提示信息
+    private String noLoginNote;
 
     public String getAnnounceToken() {
         return announceToken;
@@ -74,5 +79,29 @@ public class PopAnnounceData implements Serializable {
 
     public void setDetailUrl(String detailUrl) {
         this.detailUrl = detailUrl;
+    }
+
+    public boolean isValidateLogin() {
+        return validateLogin;
+    }
+
+    public void setValidateLogin(boolean validateLogin) {
+        this.validateLogin = validateLogin;
+    }
+
+    public String getLoginToken() {
+        return loginToken;
+    }
+
+    public void setLoginToken(String loginToken) {
+        this.loginToken = loginToken;
+    }
+
+    public String getNoLoginNote() {
+        return noLoginNote;
+    }
+
+    public void setNoLoginNote(String noLoginNote) {
+        this.noLoginNote = noLoginNote;
     }
 }

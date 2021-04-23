@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -116,22 +117,40 @@ public class DialogManager {
                     @Override
                     public void onViewClick(BindViewHolder viewHolder, View view, SGDialog tDialog) {
                         if (view.getId() == R.id.bt_check) {
-                            if (popAnnounceData != null && !TextUtils.isEmpty(popAnnounceData.getDetailUrl())) {
-                                if (popAnnounceData.getAnnounce() != null && !TextUtils.isEmpty(popAnnounceData.getAnnounce().getAnnounceName())) {
-                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "消息中心",//popAnnounceData.getAnnounce().getAnnounceName()
-                                            titleColor, titleBarColor, backImageColor);
-                                } else {
-                                    MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "消息中心", titleColor, titleBarColor, backImageColor);
+                            //此处判断是否需要校验登录
+                            if(popAnnounceData.isValidateLogin()) {
+                                if(!TextUtils.isEmpty(popAnnounceData.getLoginToken())) {
+                                    jumpToDetailPage(popAnnounceData);
                                 }
-
+                                else{
+                                    Toast.makeText(view.getContext(), popAnnounceData.getNoLoginNote(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-
+                            else{
+                                jumpToDetailPage(popAnnounceData);
+                            }
                         }
                         tDialog.dismiss();
                     }
                 })
                 .create()
                 .show();
+    }
+
+    /**
+     * 查看详情
+     * @param popAnnounceData
+     */
+    private void jumpToDetailPage(PopAnnounceData popAnnounceData) {
+        if (popAnnounceData != null && !TextUtils.isEmpty(popAnnounceData.getDetailUrl())) {
+            if (popAnnounceData.getAnnounce() != null && !TextUtils.isEmpty(popAnnounceData.getAnnounce().getAnnounceName())) {
+                MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "消息中心",//popAnnounceData.getAnnounce().getAnnounceName()
+                        titleColor, titleBarColor, backImageColor);
+            } else {
+                MyWebView.startActivity(context, popAnnounceData.getDetailUrl(), "消息中心", titleColor, titleBarColor, backImageColor);
+            }
+
+        }
     }
 
     public static class Builder {
