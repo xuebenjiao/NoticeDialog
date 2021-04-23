@@ -49,6 +49,8 @@ public class PopAnnounceData implements Serializable {
     private String announceToken;
     private AnnounceData announce;
     private String detailUrl;
+    //用户token
+    private String  userToken;
 
     public String getAnnounceToken() {
         return announceToken;
